@@ -33,3 +33,15 @@ footer {
 .card{
   height: 100%;
 }
+
+.completed{
+  color: #fff;
+  background-color: green;
+  padding: 6px;
+}
+
+.incompleted{
+  background-color: red;
+  color: #fff;
+  padding: 6px;
+}

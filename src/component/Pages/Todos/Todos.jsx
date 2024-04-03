@@ -42,7 +42,11 @@ const Todos = () => {
                     </h5>
                     <p className="card-text">{todo.title}</p>
                     <p>
-                      <b>Status:</b> {todo.completed ? "Completed" : "Incompleted"}
+                      <b>Status: </b>
+                      <span className={todo.completed ? "completed" : "incompleted"}
+                      >
+                        {todo.completed ? "Completed" : "Incompleted"}
+                      </span>
                     </p>
                   </div>
                 </div>
