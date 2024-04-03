@@ -1,0 +1,35 @@
+nav.navbar.navbar-expand-lg {
+  background-color: #093561 !important;
+}
+
+nav.navbar.navbar-expand-lg .nav-link,
+.navbar-brand {
+  color: white;
+}
+
+.home {
+  height: calc(100vh - 103px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer {
+  background-color: #093561 !important;
+  text-align: center;
+  color: #fff;
+  padding: 10px 0;
+  font-size: 18px;
+}
+
+.main{
+  padding: 60px 0;
+}
+
+.main h1{
+  text-align: center;
+}
+
+.card{
+  height: 100%;
+}
