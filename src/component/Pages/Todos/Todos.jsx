@@ -1,21 +1,36 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const setTodoApi = async () => {
+    try {
+      const res = await axios.get("https://jsonplaceholder.typicode.com/todos");
+      if (res.status == 200) {
+        setTodos(res?.data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
+    setTodoApi();
     setLoading(true);
-    fetch("https://jsonplaceholder.typicode.com/todos")
-      .then((res) => res.json())
-      .then((data) => {
-        setTodos(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+    // fetch("https://jsonplaceholder.typicode.com/todos")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setTodos(data);
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setLoading(false);
+    //   });
   }, []);
 
   if (loading) {
@@ -43,7 +58,8 @@ const Todos = () => {
                     <p className="card-text">{todo.title}</p>
                     <p>
                       <b>Status: </b>
-                      <span className={todo.completed ? "completed" : "incompleted"}
+                      <span
+                        className={todo.completed ? "completed" : "incompleted"}
                       >
                         {todo.completed ? "Completed" : "Incompleted"}
                       </span>

@@ -1,21 +1,38 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Photos = () => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const setPhotoApi = async () => {
+    try {
+      const res = await axios.get(
+        "https://jsonplaceholder.typicode.com/photos"
+      );
+      if (res.status == 200) {
+        setPhotos(res?.data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
+    setPhotoApi();
     setLoading(true);
-    fetch("https://jsonplaceholder.typicode.com/photos")
-      .then((res) => res.json())
-      .then((data) => {
-        setPhotos(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+    // fetch("https://jsonplaceholder.typicode.com/photos")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setPhotos(data);
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setLoading(false);
+    //   });
   }, []);
 
   if (loading) {

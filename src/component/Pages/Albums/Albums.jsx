@@ -1,21 +1,38 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Albums = () => {
   const [albums, setAlbums] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const setAlbumApi = async () => {
+    try {
+      const res = await axios.get(
+        "https://jsonplaceholder.typicode.com/albums"
+      );
+      if (res.status == 200) {
+        setAlbums(res?.data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
+    setAlbumApi()
     setLoading(true);
-    fetch("https://jsonplaceholder.typicode.com/albums")
-      .then((res) => res.json())
-      .then((data) => {
-        setAlbums(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+    // fetch("https://jsonplaceholder.typicode.com/albums")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setAlbums(data);
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setLoading(false);
+    //   });
   }, []);
 
   if (loading) {

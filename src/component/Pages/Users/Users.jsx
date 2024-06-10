@@ -1,21 +1,36 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const setUserApi = async () => {
+    try {
+      const res = await axios.get("https://jsonplaceholder.typicode.com/users");
+      if (res.status == 200) {
+        setUsers(res?.data);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
+    setUserApi();
     setLoading(true);
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then((res) => res.json())
-      .then((data) => {
-        setUsers(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+    // fetch("https://jsonplaceholder.typicode.com/users")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setUsers(data);
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setLoading(false);
+    //   });
   }, []);
 
   if (loading) {

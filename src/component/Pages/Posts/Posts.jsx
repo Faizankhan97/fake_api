@@ -1,21 +1,36 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Posts = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const setPostApi = async () =>{
+    try {
+      const res = await axios.get("https://jsonplaceholder.typicode.com/posts");
+      if(res.status == 200){
+        setPosts(res?.data)
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  }
+
   useEffect(() => {
+    setPostApi();
     setLoading(true);
-    fetch("https://jsonplaceholder.typicode.com/posts")
-      .then((res) => res.json())
-      .then((data) => {
-        setPosts(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+    // fetch("https://jsonplaceholder.typicode.com/posts")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setPosts(data);
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setLoading(false);
+    //   });
   }, []);
 
   if (loading) {

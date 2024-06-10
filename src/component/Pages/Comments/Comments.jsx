@@ -1,21 +1,38 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 
 const Comments = () => {
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(false);
 
+    const setCommentApi = async () => {
+      try {
+        const res = await axios.get(
+          "https://jsonplaceholder.typicode.com/comments"
+        );
+        if (res.status == 200) {
+          setComments(res?.data);
+          setLoading(false);
+        }
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+
   useEffect(() => {
+    setCommentApi()
     setLoading(true);
-    fetch("https://jsonplaceholder.typicode.com/comments")
-      .then((res) => res.json())
-      .then((data) => {
-        setComments(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-        setLoading(false);
-      });
+    // fetch("https://jsonplaceholder.typicode.com/comments")
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     setComments(data);
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     console.log(err);
+    //     setLoading(false);
+    //   });
   }, []);
 
   if (loading) {
